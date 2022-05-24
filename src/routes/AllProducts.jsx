@@ -22,7 +22,7 @@ class AllProducts extends React.Component {
   }
 
   populateDb(){
-      fetch("http://localhost:8080")
+      fetch("https://pedro-ruas-scandiweb-test.herokuapp.com")
       .then((result) => result.json())
       .then((jsonResult) => this.setState({dbRequest : jsonResult}))
   }
@@ -60,7 +60,7 @@ class AllProducts extends React.Component {
         deletable.push(key)
       }
     }
-    fetch('http://localhost:8080/delete', {
+    fetch('https://pedro-ruas-scandiweb-test.herokuapp.com/delete', {
             method: 'POST',
             body: JSON.stringify(deletable),
         })

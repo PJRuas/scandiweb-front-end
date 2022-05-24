@@ -137,7 +137,7 @@ class ProductFrom extends React.Component {
 
         const formData = new FormData(e.target)
 
-        fetch('http://localhost:8080/add', {
+        fetch('https://pedro-ruas-scandiweb-test.herokuapp.com/add', {
             method: 'POST',
             body: formData,
         })
@@ -152,7 +152,7 @@ class ProductFrom extends React.Component {
                 </div>
                 <div id="product-view">
                     <div>
-                        <form id='product_form' method='POST' action='http://localhost:8080/add' onSubmit={this.handleSubmit}>
+                        <form id='product_form' method='POST' action='https://pedro-ruas-scandiweb-test.herokuapp.com/add' onSubmit={this.handleSubmit}>
                             <div id="form-selector">
                                 <label id='select-label'>Type</label>
                                 <select name="productType" id="productType" onChange={this.handleType}>
