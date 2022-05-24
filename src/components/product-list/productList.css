@@ -1,0 +1,83 @@
+#product-list{
+    margin-bottom: 6.5rem;
+}
+
+#product-list-header {
+   display: grid;
+   justify-content:space-between;
+   grid-template-columns: 1fr 1fr;
+   align-items: center;
+   border-bottom: 2px solid var(--color-primary);
+}
+
+#product-list-header h1 {
+    width: fit-content;
+    margin-right: 2rem;
+    padding: 1rem;
+}
+
+#product-list-itens {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap:0rem 1rem;
+    align-content: center;
+}
+
+#search-input {
+    border-radius: 0 1rem 1rem 0;
+}
+
+#select-filter {
+    border-radius: 1rem 0 0 1rem;
+    text-align: center;
+    color: var(--color-bg);
+    background: var(--color-primary);
+    width: 9rem;
+}
+
+.search-form {
+    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    width: fit-content;
+    padding: 1rem;
+}
+
+section.product{
+    margin-top: 1rem;
+}
+
+hr {
+    width: 100%;
+    color: var(--color-primary);
+
+}
+
+/* -------------------------- MEDIUM DEVICES ------------------------- */
+@media screen and (max-width: 1024px) {
+    #product-list-itens {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    #product-list-header {
+        display: block;
+     }
+}
+
+
+/* -------------------------- SMALL DEVICES ------------------------- */
+@media screen and (max-width: 600px) {
+    #product-list-itens {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0rem 0.5rem;
+    }
+
+    section.product{
+        margin-top: 0.5rem;
+    }
+
+    #product-list-header {
+        display: block;
+     }
+}

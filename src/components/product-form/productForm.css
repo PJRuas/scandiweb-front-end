@@ -1,0 +1,69 @@
+#productType {
+    border-radius: 0 1rem 1rem 0;
+    text-align: center;
+    color: var(--color-bg);
+    background: var(--color-light);
+    width: 7rem;
+    height: 1.7rem;
+}
+
+#select-label {
+    border-radius: 1rem 0 0 1rem;
+    text-align: center;
+    color: var(--color-bg);
+    background: var(--color-primary);
+    width: 7rem;
+    height: 1.7rem;
+}
+
+#form-selector {
+    width: fit-content;
+    display: grid;
+    gap: 0;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    justify-items: left;
+}
+
+#product_form {
+    display: grid;
+    gap: 1.2rem 1rem;
+    margin-top: 1.5rem;
+}
+
+#add-product-page {
+    margin-top: 3rem;
+}
+
+#add-product-header {
+    border-bottom: 2px solid var(--color-primary);
+ }
+
+ #product-view{
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    align-items: flex-start;
+ }
+
+ #SUBMIT-PRODUCT-FORM{
+     display: none;
+ }
+
+ /* -------------------------- MEDIUM DEVICES ------------------------- */
+@media screen and (max-width: 1024px) {
+    #product-view{
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+
+ /* -------------------------- SMALL DEVICES ------------------------- */
+@media screen and (max-width: 600px) {
+    .product-preview{
+        display: none;
+    }
+
+    #product-view{
+        grid-template-columns: 1fr;
+    }
+}

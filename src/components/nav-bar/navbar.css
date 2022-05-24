@@ -1,0 +1,51 @@
+nav {
+    background: rgba(0, 0, 0, 0.3);
+    height: 3.2rem;
+    z-index: 2;
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    border-radius: 1.2rem;
+    backdrop-filter: blur(15px);
+    bottom: 2.2rem;
+    width: fit-content;
+}
+
+.navbar {
+    padding: 0.1rem 0.1rem;
+    margin: 0.3rem;
+    text-align: center;
+    position: relative;
+    display: flex;
+    gap: .3rem;
+    justify-content: center;
+    align-items: center;
+}
+
+div > .btn {
+    height: 2.5rem;
+    width: 9rem;
+}
+
+#delete-product-btn, #btn-cancel-add {
+    background-color: var(--color-alert);
+    color: var(--color-alert-variant);
+}
+
+#delete-product-btn:hover, #btn-cancel-add:hover {
+    background-color: var(--color-alert-variant);
+    color: var(--color-alert);
+}
+
+#btn-cancel-add > a {
+    color: var(--color-alert-variant);
+}
+
+#btn-cancel-add > a:hover {
+    color: var(--color-alert);
+}
+
+.btn-primary > a:hover {
+    color: var(--color-bg-variant);
+}
