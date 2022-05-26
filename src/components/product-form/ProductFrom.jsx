@@ -77,7 +77,6 @@ class ProductFrom extends React.Component {
         let id = ''
         if(e.target.id === 'productType') { id = 'type'} 
         else { id = e.target.id}
-        console.log(id)
         for(let field in this.attributeConverter){
             for(let i of this.formFields){
                 if (i === field ) {
