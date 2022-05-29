@@ -12,12 +12,16 @@ class AddProduct extends React.Component {
 
     this.submitForm = this.submitForm.bind(this)
     this.getStatus = this.getStatus.bind(this)
+    this.onSubmitSuccess = this.onSubmitSuccess.bind(this)
   }
 
   submitForm(){
     document.getElementById('SUBMIT-PRODUCT-FORM').click()
+  }
+  
+  onSubmitSuccess(){
     this.done = true
-    this.forceUpdate()
+    this.forceUpdate()  
   }
 
   getStatus(status){
@@ -29,12 +33,12 @@ class AddProduct extends React.Component {
     if(!this.done){   
       return (
         <>
-        <ProductFrom statusFunction={this.getStatus}/>
+        <ProductFrom statusFunction={this.getStatus} success = {this.onSubmitSuccess}/>
         <NavBar firstButton={{'id':'save-product-btn',
             'text':'SAVE',
             'class':'btn btn-alert',
             'function':this.submitForm,
-            'buttonStatus':this.buttonStatus}}
+            'buttonStatus':false}}
             secondButton={{'id':'btn-cancel-add',
             'text':'CANCEL',
             'class':'btn btn-primary',

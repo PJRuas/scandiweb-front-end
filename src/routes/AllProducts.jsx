@@ -60,6 +60,11 @@ class AllProducts extends React.Component {
         deletable.push(key)
       }
     }
+
+    if(deletable.length === 0){
+      return null
+    }
+
     fetch('https://pedro-ruas-scandiweb-test.herokuapp.com/delete', {
             method: 'POST',
             body: JSON.stringify(deletable),

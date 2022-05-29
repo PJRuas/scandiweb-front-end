@@ -130,6 +130,29 @@ class ProductFrom extends React.Component {
         }
     }
 
+    handleInputs(){
+        let inputs = document.querySelectorAll('#product_form input')
+        let productType = document.getElementById('productType')
+
+        let type = 'book'
+
+        if(productType){
+            type = productType.value
+        }
+
+        for(let element of inputs){
+            element.addEventListener('invalid', function(event) {
+              if(event.target.validity.valueMissing){
+                  event.target.setCustomValidity('Please provide ' + type + "'s " + element.id)
+              }  
+            })
+
+            element.addEventListener('change', function(event) {
+                event.target.setCustomValidity('')
+              })
+        }
+
+    }
 
     handleSubmit(e){
         e.preventDefault()
@@ -140,10 +163,12 @@ class ProductFrom extends React.Component {
             method: 'POST',
             body: formData,
         })
+        this.props.success();
     }
 
 
     render(){
+        this.handleInputs()
         return (
             <section className='container' id='add-product-page'>
                 <div id="add-product-header">
