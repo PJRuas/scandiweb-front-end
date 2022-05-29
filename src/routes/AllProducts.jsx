@@ -89,7 +89,7 @@ class AllProducts extends React.Component {
           'text':'MASS DELETE',
           'class':'btn btn-alert',
           'function': this.massDelete,
-          'buttonStatus': this.buttonStatus}}/>
+          'buttonStatus': false}}/>
           <ProductList function={this.getDeletable} products={this.state.dbRequest}/>
     </>
     )
