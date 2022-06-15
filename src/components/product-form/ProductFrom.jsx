@@ -5,63 +5,40 @@ import Product from '../product/Product'
 class ProductFrom extends React.Component {
     constructor(){
         super()
+
         this.typeFields = {
             'book':['Weight'],
             'dvd':['Size'],
             'furniture':['Height', 'Width', 'Length']
         }
-
         this.commonFields = ['sku', 'name', 'price', 'type']
 
-        this.initial = 'book'
-
-        this.initialPreview = [{
-            'name':'', 'type': this.initial, 'price':'', 'attribute':'', 'sku': ''
-        }]
-        this.formFields = this.typeFields[this.initial]
-        this.productPreview = this.initialPreview
         this.attributeConverter = {}
 
-        this.setFormFields = this.setFormFields.bind(this)
-        this.setProductPreview = this.setProductPreview.bind(this)
-        this.setAttributeConverter = this.setAttributeConverter.bind(this)
-        
-        this.handleType = this.handleType.bind(this)
-        this.handleAttribute = this.handleAttribute.bind(this)
-        this.handleFields = this.handleFields.bind(this)
-        this.handlePreview = this.handlePreview.bind(this)
-        this.isArrayEmpty = this.isArrayEmpty.bind(this)
-        this.resetFields = this.resetFields.bind(this)
-        this.handleSave = this.handleSave.bind(this)
-        this.handleSubmit = this.handleSubmit.bind(this)
+        this.state = {productPreview : {
+            'name':'', 'type':'book', 'price':'', 'attribute':'', 'sku': ''
+            },
+            formFields : this.typeFields['book']
+            
+        }
     }
-    
-    setFormFields(value){
-        this.formFields = value
-    }
-    setProductPreview(value){
-        this.productPreview = value
-    }
-    setAttributeConverter(value){
+
+    setAttributeConverter = (value) => {
         this.attributeConverter = value
     }
     
-    handleSave(){
+    handleSave = () => {
         let status = true
-        if(!Object.values(this.productPreview[0]).includes('') ){
-            if(this.productPreview[0].type !== 'furniture' || this.productPreview[0].attribute.length === 3){
+        if(!Object.values(this.state.productPreview).includes('') ){
+            if(this.state.productPreview.type !== 'furniture' || this.state.productPreview.attribute.length === 3){
                 status = false
             }
         }
         this.props.statusFunction(status)
     }
     
-    handleType(e){
-        this.handleFields(e)
-        this.handlePreview(e)
-    }
-
-    handleAttribute(e){
+    
+    handleAttribute = (e) => {
         let attribute = e.target
         let attributes = this.attributeConverter
         if (!this.commonFields.includes(attribute.id)) {
@@ -69,33 +46,32 @@ class ProductFrom extends React.Component {
         }
         this.setAttributeConverter(attributes)
     }
-
-    handlePreview(e) {
-        let previewInput = this.productPreview[0];
+    
+    handlePreview = (e) => {
+        let previewInput = this.state.productPreview;
         this.handleAttribute(e)
         let attribute = []
         let id = ''
         if(e.target.id === 'productType') { id = 'type'} 
         else { id = e.target.id}
         for(let field in this.attributeConverter){
-            for(let i of this.formFields){
+            for(let i of this.state.formFields){
                 if (i === field ) {
                     attribute.push(this.attributeConverter[field])
                 }
             }
         }
-
+        
         if (this.isArrayEmpty(attribute)){
             attribute = ''
         }
         previewInput['attribute'] = attribute
         previewInput[id] = e.target.value
-        this.setProductPreview([previewInput])
+        this.setState({productPreview : previewInput})
         this.handleSave()
-        this.forceUpdate()
     }
-
-    isArrayEmpty(array) {
+    
+    isArrayEmpty = (array) => {
         let emptyParameters = [null, '']
         let check = true;
         
@@ -110,63 +86,70 @@ class ProductFrom extends React.Component {
         }
         return check
     }
-
-    handleFields(e) {
-        this.setFormFields(this.typeFields[e.target.value])
+    
+    handleFields = (e) => {
+        this.setState({formFields : this.typeFields[e.target.value]})
         this.resetFields()
     }
-
-    resetFields() {
+    
+    resetFields = () => {
         for(let key in this.typeFields){
             for(let item of (this.typeFields[key])){
-                    let target = document.getElementById(item)
-                    if(target){
-                        target.value = ''
-                    }
+                let target = document.getElementById(item)
+                if(target){
+                    target.value = ''
+                }
             }
         }
         for(let field in this.attributeConverter){
             this.attributeConverter[field] = ''
         }
     }
-
-    handleInputs(){
+    
+    handleInputs = () =>{
         let inputs = document.querySelectorAll('#product_form input')
         let productType = document.getElementById('productType')
-
+        
         let type = 'book'
-
+        
         if(productType){
             type = productType.value
         }
-
+        
         for(let element of inputs){
             element.addEventListener('invalid', function(event) {
-              if(event.target.validity.valueMissing){
+                if(event.target.validity.valueMissing){
                   event.target.setCustomValidity('Please provide ' + type + "'s " + element.id)
-              }  
+                }  
             })
-
+            
             element.addEventListener('change', function(event) {
                 event.target.setCustomValidity('')
-              })
+            })
         }
-
+        
+    }
+    
+    handleType = (e) =>{
+        this.handleFields(e)
+        this.handlePreview(e)
     }
 
-    handleSubmit(e){
+    handleSubmit = (e) => {
         e.preventDefault()
-
+        
         const formData = new FormData(e.target)
+        
+        const path = `https://pedro-ruas-scandiweb-test.herokuapp.com/add/${this.state.productPreview.type}`
 
-        fetch('https://pedro-ruas-scandiweb-test.herokuapp.com/add' + this.productPreview['type'], {
+        fetch(path, {
             method: 'POST',
             body: formData,
         })
         this.props.success();
     }
-
-
+    
+    
     render(){
         this.handleInputs()
         return (
@@ -176,7 +159,7 @@ class ProductFrom extends React.Component {
                 </div>
                 <div id="product-view">
                     <div>
-                        <form id='product_form' method='POST' action='https://pedro-ruas-scandiweb-test.herokuapp.com/add' onSubmit={this.handleSubmit}>
+                        <form id='product_form' method='POST' onSubmit={this.handleSubmit}>
                             <div id="form-selector">
                                 <label id='select-label'>Type</label>
                                 <select name="productType" id="productType" onChange={this.handleType}>
@@ -197,10 +180,10 @@ class ProductFrom extends React.Component {
                                 <input type="number" autoComplete='off' name="productPrice" step="0.01" min="0.01" className="input" id="price" required onChange={this.handlePreview}/>
                                 <label className='input-label'>Price</label>
                             </div>
-                            {this.formFields.map((field) => {return <>
+                            {this.state.formFields.map((field) => {return <>
                                 <div className='input-group'>
-                                    <input type="number" autoComplete='off' name={field} step="0.01" min="0.01" className="input" id={field} required onChange={this.handlePreview}/>
-                                    <label className='input-label'>{field}</label>
+                                    <input key={field} type="number" autoComplete='off' name={field} step="0.01" min="0.01" className="input" id={field} required onChange={this.handlePreview}/>
+                                    <label key={`${field}Label`} className='input-label'>{field}</label>
                                 </div>
                             </>
                             })}
@@ -208,7 +191,7 @@ class ProductFrom extends React.Component {
                     </form>
                 </div>
                 <div className="product-preview">
-                    {this.productPreview.map((input) =>  <Product name={input.name} type={input.type} price={input.price} sku={input.sku} attribute={input.attribute}/>)}
+                    {[this.state.productPreview].map((input) =>  <Product key={`${input.name}Preview`} name={input.name} type={input.type} price={input.price} sku={input.sku} attribute={input.attribute}/>)}
                 </div>
             </div>
         </section>

@@ -7,30 +7,23 @@ class AddProduct extends React.Component {
   constructor(){
     super()
 
-    this.buttonStatus = true
-    this.done = false
-
-    this.submitForm = this.submitForm.bind(this)
-    this.getStatus = this.getStatus.bind(this)
-    this.onSubmitSuccess = this.onSubmitSuccess.bind(this)
+    this.state = {buttonStatus : true, done : false }
   }
 
-  submitForm(){
+  submitForm = () => {
     document.getElementById('SUBMIT-PRODUCT-FORM').click()
   }
   
-  onSubmitSuccess(){
-    this.done = true
-    this.forceUpdate()  
+  onSubmitSuccess = () => {
+    this.setState({done : true})
   }
 
-  getStatus(status){
-    this.buttonStatus = status
-    this.forceUpdate()
+  getStatus = (status) => {
+    this.setState({buttonStatus : status})
   }
 
   render(){
-    if(!this.done){   
+    if(!this.state.done){   
       return (
         <>
         <ProductFrom statusFunction={this.getStatus} success = {this.onSubmitSuccess}/>

@@ -6,22 +6,13 @@ class AllProducts extends React.Component {
 
   constructor(){
     super()
-    this.getDeletable = this.getDeletable.bind(this)
-    this.handleDeleteButton = this.handleDeleteButton.bind(this)
-    this.toDelete = {}
-    this.buttonStatus = true
-    this.setToDelete = this.setToDelete.bind(this)
-    this.setButtonStatus = this.setButtonStatus.bind(this)
+    this.initialState = {dbRequest: null, toDelete: {}, buttonStatus: true}
 
-    this.massDelete = this.massDelete.bind(this)
-
-    this.state = {
-      dbRequest: null
-    }
+    this.state = this.initialState
 
   }
 
-  populateDb(){
+  populateDb = () =>{
       fetch("https://pedro-ruas-scandiweb-test.herokuapp.com")
       .then((result) => result.json())
       .then((jsonResult) => this.setState({dbRequest : jsonResult}))
@@ -31,32 +22,23 @@ class AllProducts extends React.Component {
     this.populateDb()
   }
 
-  setToDelete(value){
-    this.toDelete = value
-  }
-
-  setButtonStatus(value){
-    this.buttonStatus = value
-  }
-
-  getDeletable(e){
-    this.setToDelete(e)
+  getDeletable = (e) => {
+    this.setState({toDelete: e})
     this.handleDeleteButton()
-    this.forceUpdate()
   }
 
-  handleDeleteButton(){
-    if(Object.values(this.toDelete).includes(true)){
-      this.setButtonStatus(false)
+  handleDeleteButton = () => {
+    if(Object.values(this.state.toDelete).includes(true)){
+      this.setState({buttonStatus: false})
     } else {
-      this.setButtonStatus(true)
+      this.setState({buttonStatus: true})
     }
   }
 
-  massDelete(){
+  massDelete = () => {
     const deletable = []
-    for(let key in this.toDelete){
-      if(this.toDelete[key]){
+    for(let key in this.state.toDelete){
+      if(this.state.toDelete[key]){
         deletable.push(key)
       }
     }
@@ -69,8 +51,7 @@ class AllProducts extends React.Component {
             method: 'POST',
             body: JSON.stringify(deletable),
         })
-    this.setToDelete({})
-    this.setState({dbRequest: null})
+    this.setState(this.initialState)
     this.populateDb()
   }
 
