@@ -159,7 +159,7 @@ class ProductFrom extends React.Component {
 
         const formData = new FormData(e.target)
 
-        fetch('https://pedro-ruas-scandiweb-test.herokuapp.com/add' + this.productPreview.type, {
+        fetch('https://pedro-ruas-scandiweb-test.herokuapp.com/add' + this.productPreview['type'], {
             method: 'POST',
             body: formData,
         })
